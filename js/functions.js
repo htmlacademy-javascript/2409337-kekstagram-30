@@ -9,6 +9,6 @@ const isPalindrom = function (string) {
   for (let i = newString.length - 1; i >= newString[0]; i--) {
     anotherString += newString[i];
   }
-  return string === anotherString;
+  return newString === anotherString;
 };
 isPalindrom('проверяемая строка');
