@@ -1,4 +1,4 @@
-const photoDescription = [
+const photoDescriptions = [
   'Жду обратной связи в коментариях!',
   'Что оличает Новый Год от деловой конференции?',
   'Красота в глазах смотрящего',
@@ -10,7 +10,7 @@ const photoDescription = [
   'Хочу сладкого',
   'Ожидания/реальность',
 ];
-const userName = [
+const userNames = [
   'Иван',
   'Сергей',
   'Мария',
@@ -20,7 +20,7 @@ const userName = [
   'Укроп',
   'кекс',
 ];
-const userMessage = [
+const userMassages = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -38,7 +38,7 @@ const getRandomInteger = (a, b) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-function creatId () {
+function getId () {
   let previousId = 0;
   return function () {
     previousId += 1;
@@ -47,20 +47,20 @@ function creatId () {
 }
 
 const creatComment = () => ({
-  id: creatId(),
+  id: getId(),
   avatar: `img/avatar-${getRandomInteger(1,6)}.svg`,
-  message:getRandomArrayElement(userMessage),
-  name:getRandomArrayElement(userName),
+  message:getRandomArrayElement(userMassages),
+  name:getRandomArrayElement(userNames),
 });
 
 const creatPhotoDescription = () => ({
   id: getRandomInteger(1,25),
   url: `photos/${getRandomInteger(1,25)}.jpg`,
-  description: getRandomArrayElement(photoDescription),
+  description: getRandomArrayElement(photoDescriptions),
   likes: getRandomInteger(15,200),
   comments: Array.from({length: getRandomInteger(0,30)}, creatComment)
 });
 
-const photoArray = Array.from({length: 25}, creatPhotoDescription);
+const photoArrays = Array.from({length: 25}, creatPhotoDescription);
 
-window.console.log(photoArray);
+window.console.log(photoArrays);
