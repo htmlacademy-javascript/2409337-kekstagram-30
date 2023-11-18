@@ -7,16 +7,16 @@ const fragment = document.createDocumentFragment();
 
 function fillPictureCard ({url, description, comments, likes}) {
   const newPicture = pictureTemplate.cloneNode(true);
-  newPicture.querySelector('picture__img').src = url;
-  newPicture.querySelector('picture__img').alt = description;
-  newPicture.querySelector('picture__comments').textContent = comments;
-  newPicture.querySelector('picture__likes').textContent = likes;
+  newPicture.querySelector('.picture__img').src = url;
+  newPicture.querySelector('.picture__img').alt = description;
+  newPicture.querySelector('.picture__comments').textContent = comments.length;
+  newPicture.querySelector('.picture__likes').textContent = likes;
   return newPicture;
 }
 
 export function showPictureCards (data) {
-  data.forEach((ojct) => {
-    fragment.appendChild(fillPictureCard(ojct));
+  data.forEach((object) => {
+    fragment.appendChild(fillPictureCard(object));
   });
   picturesContaner.appendChild(fragment);
 }
