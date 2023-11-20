@@ -7,12 +7,19 @@ const getRandomInteger = (a, b) => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const getId = function () {
+const getId = function (count) {
   let previousId = 0;
   return function () {
     previousId += 1;
+    if (count) {
+      if (previousId > count) {
+        previousId = 1;
+      }
+    }
     return previousId;
   };
 };
 
-export {getRandomInteger, getRandomArrayElement, getId};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInteger, getRandomArrayElement, getId, isEscapeKey};

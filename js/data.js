@@ -30,21 +30,26 @@ const userMassages = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
+const PHOTO_DESCRIPTION_COUNT = 25;
+const generateCommentId = getId();
+const generatePhotoId = getId();
+const generateUrl = getId(PHOTO_DESCRIPTION_COUNT);
 
 const creatComment = () => ({
-  id: getId(),
+  id: generateCommentId(),
   avatar: `img/avatar-${getRandomInteger(1,6)}.svg`,
   message:getRandomArrayElement(userMassages),
   name:getRandomArrayElement(userNames),
 });
 
 const creatPhotoDescription = () => ({
-  id: getRandomInteger(1,25),
-  url: `photos/${getRandomInteger(1,25)}.jpg`,
+  id: generatePhotoId(),
+  url: `photos/${generateUrl()}.jpg`,
   description: getRandomArrayElement(photoDescriptions),
   likes: getRandomInteger(15,200),
   comments: Array.from({length: getRandomInteger(0,30)}, creatComment)
 });
 
-const getPhotoArrays = () => Array.from({length: 25}, creatPhotoDescription);
-export {getPhotoArrays};
+const getPhotoArrays = () => Array.from({length: PHOTO_DESCRIPTION_COUNT}, creatPhotoDescription);
+export const data = getPhotoArrays();
+

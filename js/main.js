@@ -1,5 +1,4 @@
-import {getPhotoArrays} from './data.js';
-window.console.log(getPhotoArrays());
+import {data} from './data.js';
 import {showPictureCards} from './pictures.js';
-showPictureCards(getPhotoArrays());
-
+showPictureCards(data);
+import './big-picture.js';
