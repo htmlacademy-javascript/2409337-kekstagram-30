@@ -76,16 +76,15 @@ function onCommentsLoaderElementClick () {
 function onPicturesContainerClick (evt) {
   const targetId = evt.target.parentNode.id;
   const pictureData = data.find((el) => el.id === +targetId);
-  showBigPicture();
 
-  fillBigPicture(pictureData);
-
-  comments = pictureData.comments;
-
-  if (comments.length > 0) {
-    showComments();
+  if (evt.target.classList[0] === 'picture__img') {
+    showBigPicture();
+    fillBigPicture(pictureData);
+    comments = pictureData.comments;
+    if (comments.length > 0) {
+      showComments();
+    }
   }
-
 }
 
 function onBigPictureCloseButtonClick () {
