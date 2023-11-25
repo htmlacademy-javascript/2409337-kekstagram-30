@@ -1,4 +1,6 @@
 import {isEscapeKey} from './util.js';
+import {resetScale} from './scale.js';
+import {init as initEffect, reset as resetEffect} from './picture-filter.js';
 
 const REQUIRED_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 
@@ -40,6 +42,8 @@ function closeRedactionForm () {
   document.removeEventListener('keydown', onImgOverlayKeydown);
   form.reset();
   pristine.reset();
+  resetScale();
+  resetEffect();
 }
 
 function onImgUploadInputChange () {
@@ -113,3 +117,4 @@ pristine.addValidator (
 
 
 form.addEventListener('submit', onFormSubmit);
+initEffect();
