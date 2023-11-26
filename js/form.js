@@ -1,6 +1,8 @@
 import {isEscapeKey} from './util.js';
 import {resetScale} from './scale.js';
 import {init as initEffect, reset as resetEffect} from './picture-filter.js';
+import { sendPicture } from './api.js';
+import { showErrorMessage, showSuccessMessage } from './message.js';
 
 const REQUIRED_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 
@@ -11,7 +13,12 @@ const body = document.querySelector('body');
 const imgOverlayCloseButton = form.querySelector('.img-upload__cancel');
 const comment = form.querySelector('.text__description');
 const hashtag = form.querySelector('.text__hashtags');
+const submitButton = form.querySelector('.img-upload__submit');
 
+const SubmitButtonCaption = {
+  SUBMITTING: 'Отправляю...',
+  IDLE: 'Опубликовать',
+};
 
 const pristine = new Pristine (form, {
   classTo: 'img-upload__field-wrapper',
@@ -19,12 +26,20 @@ const pristine = new Pristine (form, {
   errorClass: 'img-upload__field-wrapper--error'
 });
 
+function toggleSubmitButton (isDisabled) {
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = isDisabled
+    ? SubmitButtonCaption.SUBMITTING
+    : SubmitButtonCaption.IDLE;
+}
+
 function isActiveElement () {
   return document.activeElement === comment || document.activeElement === hashtag;
 }
 
 function onImgOverlayKeydown (evt) {
-  if (isEscapeKey(evt) && !isActiveElement()) {
+  const isErrorMessageExists = Boolean (document.querySelector('.error'));
+  if (isEscapeKey(evt) && !isActiveElement() && !isErrorMessageExists) {
     evt.preventDefault();
     closeRedactionForm();
   }
@@ -56,10 +71,25 @@ function onImgOverlayCloseButtonClick () {
 imgUploadInput.addEventListener('change', onImgUploadInputChange);
 imgOverlayCloseButton.addEventListener('click', onImgOverlayCloseButtonClick);
 
+async function sendForm (formElement) {
+  if (!pristine.validate()) {
+    return;
+  }
+  try {
+    toggleSubmitButton(true);
+    await sendPicture(new FormData(formElement));
+    toggleSubmitButton(false);
+    closeRedactionForm();
+    showSuccessMessage();
+  } catch {
+    showErrorMessage();
+    toggleSubmitButton(false);
+  }
+}
 
 function onFormSubmit (evt) {
-  pristine.validate();
   evt.preventDefault();
+  sendForm(evt.target);
 }
 
 function validateComment (value) {
@@ -69,7 +99,7 @@ function validateComment (value) {
 const getHashtags = (tagString) => tagString
   .trim()
   .split(' ')
-  .filter(Boolean);
+  .filter((el) => Boolean(el.length));
 
 
 function isHachtagValid (value) {

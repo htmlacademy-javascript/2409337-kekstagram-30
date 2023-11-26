@@ -10,16 +10,8 @@ const ServerRout = {
   SEND_DATA: '/',
 };
 
-const ErrorText = {
-  [HttpMethod.GET]: 'Не удалось загрузить данные. Попробуйте еще раз',
-  [HttpMethod.POST]: 'Не удалось отправить данные формы',
-};
-
 async function request (url, method = HttpMethod.GET, body = null) {
   const response = await fetch (url, {method, body});
-  if (! response.ok) {
-    throw new Error (ErrorText[method]);
-  }
   return response.json();
 }
 

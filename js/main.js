@@ -1,6 +1,17 @@
-import {data} from './data.js';
 import {showPictureCards} from './pictures.js';
 import './big-picture.js';
 import './form.js';
+import { loadPictures } from './api.js';
+import { showErrorMessage } from './util.js';
 
-showPictureCards(data);
+
+async function bootstrap () {
+  try {
+    const pictures = await loadPictures ();
+    showPictureCards(pictures);
+  } catch (error) {
+    showErrorMessage();
+  }
+}
+
+bootstrap();
