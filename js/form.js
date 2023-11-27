@@ -5,6 +5,8 @@ import { sendPicture } from './api.js';
 import { showErrorMessage, showSuccessMessage } from './message.js';
 
 const REQUIRED_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 
 const form = document.querySelector('.img-upload__form');
 const imgUploadOverlay = form.querySelector('.img-upload__overlay');
@@ -14,6 +16,9 @@ const imgOverlayCloseButton = form.querySelector('.img-upload__cancel');
 const comment = form.querySelector('.text__description');
 const hashtag = form.querySelector('.text__hashtags');
 const submitButton = form.querySelector('.img-upload__submit');
+const imgPreview = form.querySelector('.img-upload__preview img');
+const effectsPreview = form.querySelectorAll('.effects__preview');
+const fileChoser = form.querySelector('.img-upload__start input[type=file]');
 
 const SubmitButtonCaption = {
   SUBMITTING: 'Отправляю...',
@@ -68,6 +73,21 @@ function onImgOverlayCloseButtonClick () {
   closeRedactionForm();
 }
 
+function onFileChoserChange () {
+  const file = fileChoser.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    imgPreview.src = URL.createObjectURL(file);
+    effectsPreview.forEach((el) => {
+      el.style.backgroundImage = `url('${imgPreview.src}')`;
+    });
+  }
+}
+
+fileChoser.addEventListener('change', onFileChoserChange);
 imgUploadInput.addEventListener('change', onImgUploadInputChange);
 imgOverlayCloseButton.addEventListener('click', onImgOverlayCloseButtonClick);
 
