@@ -2,7 +2,6 @@
 const pictureTemplate = document.querySelector('#picture').content.querySelector('a');
 const picturesContaner = document.querySelector('.pictures');
 const fragment = document.createDocumentFragment();
-let arrayPhotos = null;
 
 function fillPictureCard ({id, url, description, comments, likes}) {
   const newPicture = pictureTemplate.cloneNode(true);
@@ -15,11 +14,10 @@ function fillPictureCard ({id, url, description, comments, likes}) {
 }
 
 function showPictureCards (data) {
-  arrayPhotos = data;
   data.forEach((object) => {
     fragment.appendChild(fillPictureCard(object));
   });
   picturesContaner.appendChild(fragment);
 }
 
-export {showPictureCards, arrayPhotos};
+export {showPictureCards};
