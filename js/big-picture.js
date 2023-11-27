@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import { arrayPhotos } from './pictures.js';
+import { pictures } from './main.js';
 
 const COMMENTS_SHOW_COUNT = 5;
 
@@ -75,7 +75,7 @@ function onCommentsLoaderElementClick () {
 
 function onPicturesContainerClick (evt) {
   const targetId = evt.target.parentNode.id;
-  const pictureData = arrayPhotos.find((el) => el.id === +targetId);
+  const pictureData = pictures.find((el) => el.id === +targetId);
 
   if (evt.target.classList[0] === 'picture__img') {
     showBigPicture();
