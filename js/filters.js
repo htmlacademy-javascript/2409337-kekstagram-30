@@ -1,13 +1,13 @@
 import { showPictureCards } from './pictures.js';
 import { debounce } from './util.js';
 
+const MAX_RANDOM_FILTER = 10;
+
 const filtersEl = document.querySelector('.img-filters');
 const filterForm = document.querySelector('.img-filters__form');
 const defaultBtn = filterForm.querySelector('#filter-default');
 const randomBtn = filterForm.querySelector('#filter-random');
 const discussedBtn = filterForm.querySelector('#filter-discussed');
-
-const MAX_RANDOM_FILTER = 10;
 
 const FilterEnum = {
   DEFUALT: 'default',
@@ -42,11 +42,14 @@ const repaint = (event, filter, data) => {
     const pictures = document.querySelectorAll('.picture');
     pictures.forEach((item) => item.remove());
     showPictureCards(filteredData);
-    const currentActiveEl = filterForm.querySelector('.img-filters__button--active');
-    currentActiveEl.classList.remove('img-filters__button--active');
-    event.target.classList.add('img-filters__button--active');
     currentFilter = filter;
   }
+};
+
+const swichFilter = function (event) {
+  const currentActiveEl = filterForm.querySelector('.img-filters__button--active');
+  currentActiveEl.classList.remove('img-filters__button--active');
+  event.target.classList.add('img-filters__button--active');
 };
 
 const debouncedRepaint = debounce(repaint);
@@ -54,13 +57,13 @@ const debouncedRepaint = debounce(repaint);
 export const initFilter = (data) => {
   filtersEl.classList.remove('img-filters--inactive');
   defaultBtn.addEventListener('click', (event) => {
-    debouncedRepaint(event, FilterEnum.DEFUALT, data);
+    debouncedRepaint(event, FilterEnum.DEFUALT, data); swichFilter(event);
   });
   randomBtn.addEventListener('click', (event) => {
-    debouncedRepaint(event, FilterEnum.RANDOM, data);
+    debouncedRepaint(event, FilterEnum.RANDOM, data); swichFilter(event);
   });
   discussedBtn.addEventListener('click', (event) => {
-    debouncedRepaint(event, FilterEnum.DISCUSSED, data);
+    debouncedRepaint(event, FilterEnum.DISCUSSED, data); swichFilter(event);
   });
 
 };
