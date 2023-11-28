@@ -123,7 +123,13 @@ const getHashtags = (tagString) => tagString
 
 
 function isHachtagValid (value) {
-  getHashtags(value).every((el) => REQUIRED_SIMBOLS.test(el));
+  let result = true;
+  getHashtags(value).forEach((el) => {
+    if (!REQUIRED_SIMBOLS.test(el)) {
+      result = false;
+    }
+  });
+  return result;
 }
 
 function isHashtagNumberValid (value) {
