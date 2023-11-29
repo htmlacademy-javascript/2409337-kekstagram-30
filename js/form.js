@@ -4,6 +4,8 @@ import {init as initEffect, reset as resetEffect} from './picture-filter.js';
 import { sendPicture } from './api.js';
 import { showErrorMessage, showSuccessMessage } from './message.js';
 
+const MAX_COMMENT_LENGTH = 140;
+const MAX_HASHTAGS_NUMBER = 5;
 const REQUIRED_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
@@ -113,7 +115,7 @@ function onFormSubmit (evt) {
 }
 
 function validateComment (value) {
-  return value.length <= 140;
+  return value.length <= MAX_COMMENT_LENGTH;
 }
 
 const getHashtags = (tagString) => tagString
@@ -133,7 +135,7 @@ function isHachtagValid (value) {
 }
 
 function isHashtagNumberValid (value) {
-  return getHashtags(value).length <= 5;
+  return getHashtags(value).length <= MAX_HASHTAGS_NUMBER;
 }
 
 function isHashtagRepeaded (value) {
