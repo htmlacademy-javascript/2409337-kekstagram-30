@@ -9,6 +9,10 @@ const MAX_HASHTAGS_NUMBER = 5;
 const REQUIRED_SIMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
+const SubmitButtonCaption = {
+  SUBMITTING: 'Отправляю...',
+  IDLE: 'Опубликовать',
+};
 
 const form = document.querySelector('.img-upload__form');
 const imgUploadOverlay = form.querySelector('.img-upload__overlay');
@@ -22,10 +26,6 @@ const imgPreview = form.querySelector('.img-upload__preview img');
 const effectsPreview = form.querySelectorAll('.effects__preview');
 const fileChoser = form.querySelector('.img-upload__start input[type=file]');
 
-const SubmitButtonCaption = {
-  SUBMITTING: 'Отправляю...',
-  IDLE: 'Опубликовать',
-};
 
 const pristine = new Pristine (form, {
   classTo: 'img-upload__field-wrapper',
